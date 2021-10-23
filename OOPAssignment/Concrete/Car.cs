@@ -22,7 +22,7 @@ namespace OOPAssignment.Concrete
 
         public Car(Coordinates coordinates, Direction direction, ISurface surface)
         {
-            Id = Guid.NewGuid();
+
             Coordinates = coordinates;
             Direction = direction;
             Surface = surface;
@@ -36,9 +36,7 @@ namespace OOPAssignment.Concrete
 
         public void Notify()
         {
-            Coordinates coordinates = new() { X = Coordinates.X, Y = Coordinates.Y };
-            CarInfo _info = new CarInfo(Id, coordinates);
-            Observer.Update(_info);
+            Observer.Update(new CarInfo(Id, Coordinates));
         }
 
         public void TurnLeft()

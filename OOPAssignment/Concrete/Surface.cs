@@ -10,9 +10,9 @@ namespace OOPAssignment.Concrete
 {
     public class Surface : ISurface, ICollidableSurface, Abstract.IObserver<CarInfo>
     {
-        public long Width { get; set; }
+        public long Width { get; private set; }
 
-        public long Height { get; set; }
+        public long Height { get; private set; }
 
         private List<CarInfo> ObservableCars = new List<CarInfo>();
 
@@ -60,29 +60,38 @@ namespace OOPAssignment.Concrete
 
         public void Update(CarInfo provider)
         {
-            var cars = GetObservables();
-            if (cars.Contains(provider))
-            {
-                var car = ObservableCars.FirstOrDefault(x => x.CarId == provider.CarId);
-                car.Coordinates = provider.Coordinates;
-            }
+            var car = ObservableCars.FirstOrDefault(x => x.CarId == provider.CarId);
 
-            else if (IsCoordinatesEmpty(provider.Coordinates))
+            Coordinates _coordinates = provider.Coordinates;
+           
+            if (IsCoordinatesInBounds(_coordinates) == false)
             {
-                ObservableCars.Add(provider);
+                throw new Exception();
+
             }
+           
+            if (IsCoordinatesEmpty(_coordinates) == false)
+            {
+                var car1 = ObservableCars
+                    .FirstOrDefault(x => x.CarId != provider.CarId
+                    && x.Coordinates.X == provider.Coordinates.X
+                    && x.Coordinates.Y == provider.Coordinates.Y);
+
+                if (car1 != null)
+                    throw new Exception();
+            }
+          
+            else if (car != null)
+            {
+                car = provider;
+            }
+            
             else
             {
-                var car = ObservableCars.FirstOrDefault(x => x.CarId == provider.CarId);
-                if (car.Coordinates.X == provider.Coordinates.X && car.Coordinates.Y == provider.Coordinates.Y)
-                {
-                    throw new Exception();
-                }
-                else
-                {
-                    ObservableCars.Add(provider);
-                }
+                ObservableCars.Add(provider);
+
             }
+        
         }
     }
 }
