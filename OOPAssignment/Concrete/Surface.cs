@@ -10,9 +10,9 @@ namespace OOPAssignment.Concrete
 {
     public class Surface : ISurface, ICollidableSurface, Abstract.IObserver<CarInfo>
     {
-        public long Width { get; private set; }
+        public long Width { get; set; }
 
-        public long Height { get; private set; }
+        public long Height { get; set; }
 
         private List<CarInfo> ObservableCars = new List<CarInfo>();
 
@@ -62,15 +62,15 @@ namespace OOPAssignment.Concrete
         {
             var car = ObservableCars.FirstOrDefault(x => x.CarId == provider.CarId);
 
-            Coordinates _coordinates = provider.Coordinates;
+            Coordinates coordinates = provider.Coordinates;
            
-            if (IsCoordinatesInBounds(_coordinates) == false)
+            if (IsCoordinatesInBounds(coordinates) == false)
             {
                 throw new Exception();
 
             }
            
-            if (IsCoordinatesEmpty(_coordinates) == false)
+            if (IsCoordinatesEmpty(coordinates) == false)
             {
                 var car1 = ObservableCars
                     .FirstOrDefault(x => x.CarId != provider.CarId

@@ -26,6 +26,7 @@ namespace OOPAssignment.Concrete
             Coordinates = coordinates;
             Direction = direction;
             Surface = surface;
+            Id = Guid.NewGuid();
         }
 
         public void Attach(Abstract.IObserver<CarInfo> observer)
