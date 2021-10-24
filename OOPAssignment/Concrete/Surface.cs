@@ -73,12 +73,12 @@ namespace OOPAssignment.Concrete
             if (IsCoordinatesEmpty(coordinates) == false)
             {
                 var car1 = ObservableCars
-                    .FirstOrDefault(x => x.CarId != provider.CarId
-                    && x.Coordinates.X == provider.Coordinates.X
-                    && x.Coordinates.Y == provider.Coordinates.Y);
+                    .FirstOrDefault(x => x.CarId != provider.CarId && x.Coordinates.X == provider.Coordinates.X  && x.Coordinates.Y == provider.Coordinates.Y);
 
                 if (car1 != null)
+                {
                     throw new Exception();
+                }
             }
           
             else if (car != null)
